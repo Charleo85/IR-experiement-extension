@@ -1,0 +1,35 @@
+{
+  "name": "medium-chrome-extension",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "description": "This is an experiment chrome extension for medium.com",
+  "main": "index.js",
+  "dependencies": {
+    "chrome-launch": "^1.1.4",
+    "chrome-manifest": "^0.2.9",
+    "webpack": "^2.4.1"
+  },
+  "devDependencies": {
+    "webpack": "^2.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "chrome-manifest": "mkdir -p dist && cp manifest.json dist/manifest.json",
+    "chrome-build": "npm run chrome-manifest && cp -R js dist && cp -R css dist",
+    "chrome-pack": "npm run chrome-build && mkdirp out && zip -rj out/chrome-octolinker-$npm_package_version.zip dist",
+    "chrome-open": "npm run chrome-build && npm run chrome-launch --",
+    "chrome-launch": "./scripts/chrome-launch.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Charleo85/medium-chrome-extension.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Charleo85/medium-chrome-extension/issues"
+  },
+  "homepage": "https://github.com/Charleo85/medium-chrome-extension#readme"
+}
