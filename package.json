@@ -17,8 +17,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "chrome-manifest": "mkdir -p dist && cp manifest.json dist/manifest.json",
-    "chrome-build": "npm run chrome-manifest && cp -R js dist && cp -R css dist",
-    "chrome-pack": "npm run chrome-build && mkdirp out && zip -rj out/chrome-octolinker-$npm_package_version.zip dist",
+    "chrome-build": "npm run chrome-manifest && cp -R js dist && cp -R css dist && cp -R src dist && cp -R icons dist && cp -R _locales dist",
+    "chrome-pack": "npm run chrome-build && mkdirp out && zip -rj out/chrome--$npm_package_version.zip dist",
     "chrome-open": "npm run chrome-build && npm run chrome-launch --",
     "chrome-launch": "./scripts/chrome-launch.js"
   },
