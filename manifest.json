@@ -17,7 +17,9 @@
     "default_popup": "src/browser_action/browser_action.html"
   },
   "permissions": [
-    "https://medium.com/*"
+    "https://medium.com/*",
+    "http://107.170.78.80/",
+    "http://107.170.78.80/chrome/medium"
   ],
   "content_scripts": [{
     "matches": [
