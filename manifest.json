@@ -23,14 +23,17 @@
   ],
   "content_scripts": [{
     "matches": [
-      "https://medium.com/*"
+      "https://*/*",
+      "http://*/*"
     ],
     "css": [
-      "src/inject/inject.css"
+      "src/inject/inject.css",
+      "semantic/dist/semantic.min.css"
     ],
     "js": [
       "src/inject/inject.js",
-      "js/jquery/jquery.js"
+      "js/jquery/jquery.js",
+      "semantic/dist/semantic.min.js"
     ]
   }]
 }
