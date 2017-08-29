@@ -1,4 +1,7 @@
-# medium-chrome-extension
+# IR-based-chrome-extension
+
+- V1 branch was built for Medium.com
+- Current master supports amazon.com
 
 ```bash
 # first run
