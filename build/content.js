@@ -14980,7 +14980,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var parseURL = function parseURL(url) {
-  var re = /^http[s?]:\/\/www\.amazon\.com\/[\w|-]+\/dp\/(\w+)\//;
+  var re = /^http[s?]:\/\/www\.amazon\.com\/[\w|\-|\/]+\/(\w{10})/;
   var myArray = url.match(re);
   if (myArray[1] != null) {
     return myArray[1];
@@ -15019,7 +15019,7 @@ var parseTitle = function parseTitle() {
   var arr = {
     title: title ? clean_str(title.textContent) : 'Not found',
     properties: description ? description : 'Not found',
-    detail: detail ? detail : 'Not found'
+    detail: detail ? detail : {}
   };
 
   return arr;
@@ -15047,7 +15047,8 @@ var App = function (_Component) {
       if (productID != '') {
         info = parseTitle();
       }
-      console.log(productID);
+      // console.log(productID);
+      // console.log(info.detail);
       this.props.dispatch({
         type: 'PRODUCT_INFO',
         payload: _extends({ productID: productID }, info)
@@ -52381,8 +52382,8 @@ function symbolObservablePonyfill(root) {
 /* 601 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(232);
-module.exports = __webpack_require__(233);
+__webpack_require__(233);
+module.exports = __webpack_require__(232);
 
 
 /***/ })

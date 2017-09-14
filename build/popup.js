@@ -32911,6 +32911,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // import fetchReview from '../../../../../event/src/action-creators/fetch-review.js';
 
+
+var renderObj = function renderObj(obj) {
+  console.log(obj);
+  // return <Table.Row></Table.Row>
+  var ret = Object.entries(obj).reduce(function (renderBuffer, element) {
+    return renderBuffer + ('\n      <Table.Row>\n        <Table.Cell>\n          ' + elements[0] + '\n        </Table.Cell>\n        <Table.Cell>\n          ' + elements[1] + '\n        </Table.Cell>\n      </Table.Row>\n      ');
+  });
+  console.log(ret);
+};
+
 var App = function (_Component) {
   _inherits(App, _Component);
 
@@ -32921,13 +32931,75 @@ var App = function (_Component) {
   }
 
   _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
-        'Product ID: ' + this.props.productID,
-        'Product Title: ' + this.props.title
+        _react2.default.createElement(
+          _semanticUiReact.Table,
+          { basic: 'very', celled: true, collapsing: true },
+          _react2.default.createElement(
+            _semanticUiReact.Table.Body,
+            null,
+            _react2.default.createElement(
+              _semanticUiReact.Table.Row,
+              null,
+              _react2.default.createElement(
+                _semanticUiReact.Table.Cell,
+                null,
+                'Product ID'
+              ),
+              _react2.default.createElement(
+                _semanticUiReact.Table.Cell,
+                null,
+                this.props.productID
+              )
+            ),
+            _react2.default.createElement(
+              _semanticUiReact.Table.Row,
+              null,
+              _react2.default.createElement(
+                _semanticUiReact.Table.Cell,
+                null,
+                'Product Title'
+              ),
+              _react2.default.createElement(
+                _semanticUiReact.Table.Cell,
+                null,
+                this.props.title
+              )
+            ),
+            _react2.default.createElement(
+              _semanticUiReact.Table.Row,
+              null,
+              _react2.default.createElement(
+                _semanticUiReact.Table.Cell,
+                null,
+                'Product Properties'
+              ),
+              _react2.default.createElement(
+                _semanticUiReact.Table.Cell,
+                null,
+                this.props.properties
+              )
+            ),
+            _react2.default.createElement(
+              _semanticUiReact.Table.Row,
+              null,
+              _react2.default.createElement(
+                _semanticUiReact.Table.Cell,
+                null,
+                'Product Detail'
+              ),
+              _react2.default.createElement(_semanticUiReact.Table.Cell, null)
+            )
+          )
+        ),
+        _react2.default.createElement(_semanticUiReact.Button, { content: 'Get Reviews', icon: 'right arrow', labelPosition: 'right' })
       );
     }
   }]);
@@ -32937,10 +33009,13 @@ var App = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    productID: (0, _lodash.get)(state, 'productInfo.productID'),
-    title: (0, _lodash.get)(state, 'productInfo.title')
+    productID: (0, _lodash.get)(state, 'productInfo.productID', ''),
+    title: (0, _lodash.get)(state, 'productInfo.title', ''),
+    properties: (0, _lodash.get)(state, 'productInfo.properties', ''),
+    detail: (0, _lodash.get)(state, 'productInfo.detail', {})
   };
 };
+// {renderObj(this.props.detail)}
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 //        <Button onClick={fetchReview}>fetchReview</Button>
@@ -88525,8 +88600,8 @@ function symbolObservablePonyfill(root) {
 /* 1229 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(575);
-module.exports = __webpack_require__(576);
+__webpack_require__(576);
+module.exports = __webpack_require__(575);
 
 
 /***/ })

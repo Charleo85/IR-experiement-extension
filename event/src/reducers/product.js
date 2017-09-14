@@ -7,10 +7,11 @@ const initialState = {
   productID: '',
   title: '',
   properties: '',
-  detail: '',
+  detail: {},
 };
 
 export default (prevstate = initialState, action) => {
+  // console.log('----', get(action, 'payload.detail', prevstate.detail));
   switch (action.type) {
     case 'PRODUCT_INFO':
       return {

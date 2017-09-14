@@ -121,6 +121,6 @@ const reviewParser = (asin, opt) => {
   })
 }
 
-export const fetchReview = (asin, opt) => (dispatch: Function) => {
+export const fetchReview = (asin, opt) => (dispatch) => {
   reviewParser(asin, opt).then(console.log).catch(console.error)
 };

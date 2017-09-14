@@ -1,9 +1,10 @@
+import "babel-polyfill";
 const path = require('path');
 
 module.exports = {
 
   entry: [
-    './event/src/index.js', 'babel-polyfill'
+    'babel-polyfill', './event/src/index.js'
   ],
 
   output: {

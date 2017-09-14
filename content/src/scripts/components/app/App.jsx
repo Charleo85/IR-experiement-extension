@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {get} from 'lodash';
 
 const parseURL = (url) => {
-    let re = /^http[s?]:\/\/www\.amazon\.com\/[\w|-]+\/dp\/(\w+)\//;
+    let re = /^http[s?]:\/\/www\.amazon\.com\/[\w|\-|\/]+\/(\w{10})/;
     var myArray = url.match(re);
     if (myArray[1] != null){
       return myArray[1];
@@ -42,7 +42,7 @@ const parseTitle = () => {
   var arr = {
   	title: title ? clean_str(title.textContent) : 'Not found',
   	properties : description ? description : 'Not found',
-  	detail : detail ? detail : 'Not found',
+  	detail : detail ? detail : {},
   }
 
   return arr;
@@ -64,7 +64,8 @@ class App extends Component {
     if (productID != ''){
       info = parseTitle();
     }
-    console.log(productID);
+    // console.log(productID);
+    // console.log(info.detail);
     this.props.dispatch({
       type: 'PRODUCT_INFO',
       payload: {productID, ...info}
