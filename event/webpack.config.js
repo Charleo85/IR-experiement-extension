@@ -1,31 +1,30 @@
 import "babel-polyfill";
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-
-  entry: [
-    'babel-polyfill', './event/src/index.js'
-  ],
+  entry: ["babel-polyfill", "./event/src/index.js"],
 
   output: {
-    filename: 'event.js',
-    path: path.join(__dirname, '../', 'build')
+    filename: "event.js",
+    path: path.join(__dirname, "../", "build")
   },
 
   resolve: {
-    extensions: ['.js', '.json'],
-    modules: ['node_modules']
+    extensions: [".js", ".json"],
+    modules: ["node_modules"]
   },
 
   module: {
-    loaders: [{
-      test: /\.(js)?$/,
-      loader: 'babel-loader',
-      exclude: /(node_modules)/,
-      include: path.join(__dirname, 'src'),
-      query: {
-        presets: ['es2015', 'react']
+    loaders: [
+      {
+        test: /\.(js)?$/,
+        loader: "babel-loader",
+        exclude: /(node_modules)/,
+        include: path.join(__dirname, "src"),
+        query: {
+          presets: ["es2015", "react"]
+        }
       }
-    }]
+    ]
   }
 };
