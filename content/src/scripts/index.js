@@ -9,21 +9,34 @@ const proxyStore = new Store({
   portName: "example"
 });
 
-const anchor = document.createElement("div");
-anchor.id = "rcr-anchor";
-const xPathNode = document.evaluate(
-  '//*[@id="feature-bullets"]/ul/li[2]',
-  document,
-  null,
-  XPathResult.FIRST_ORDERED_NODE_TYPE,
-  null
-).singleNodeValue;
-console.log(xPathNode);
-xPathNode.insertBefore(anchor, xPathNode.childNodes[0]);
-
-render(
+const provider = (
   <Provider store={proxyStore}>
     <App />
-  </Provider>,
+  </Provider>
+);
+
+const anchor = document.createElement("div");
+anchor.id = "rcr-anchor";
+document.body.insertBefore(anchor, document.body.childNodes[0]);
+
+render(
+  provider,
   document.getElementById("rcr-anchor")
 );
+
+// const xPathNode = document.evaluate(
+//   `//*[@id="feature-bullets"]/ul`,
+//   document,
+//   null,
+//   XPathResult.FIRST_ORDERED_NODE_TYPE,
+//   null
+// ).singleNodeValue;
+// console.log(xPathNode);
+// for (var i = 2; i < 4; i++) {
+//   const anchor = document.createElement("div");
+//   anchor.id = `rcr-anchor-${i}`;
+//   xPathNode.insertBefore(anchor, xPathNode.childNodes[i].childNodes[0]);
+// }
+
+// render(provider, xPathNode);
+// render(provider, document.getElementById("rcr-anchor-3"));
