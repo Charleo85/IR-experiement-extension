@@ -4,8 +4,8 @@ import {get} from 'lodash';
 
 const parseURL = (url) => {
     let re = /^http[s?]:\/\/www\.amazon\.com\/[\w|\-|\/]+\/(\w{10})/;
-    var myArray = url.match(re);
-    if (myArray[1] != null){
+    const myArray = url.match(re);
+    if (myArray && myArray[1] != null){
       return myArray[1];
     }else{
       return '';

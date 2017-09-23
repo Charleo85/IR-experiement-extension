@@ -19,6 +19,7 @@
     "default_popup": "popup.html"
   },
   "permissions": [
+    "contextMenus",
     "https://www.amazon.com/*"
   ],
   "content_scripts": [{

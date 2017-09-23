@@ -1,16 +1,18 @@
 import { applyMiddleware, createStore } from "redux";
 import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
-
 import { wrapStore } from "react-chrome-redux";
+import {setupMenu} from './menu.js';
 
-const logger = createLogger({
-  predicate: (getState, action) => action.type === "PRODUCT_INFO",
-  timestamp: true
-});
+// const logger = createLogger({
+//   predicate: (getState, action) => action.type === "PRODUCT_INFO",
+//   timestamp: true
+// });
 
-const store = createStore(rootReducer, applyMiddleware(logger));
+const store = createStore(rootReducer)//, applyMiddleware(logger));
 
 wrapStore(store, {
   portName: "example"
 });
+
+setupMenu();
