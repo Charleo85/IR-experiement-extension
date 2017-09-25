@@ -5,6 +5,8 @@ import {Store} from "react-chrome-redux";
 import TextDropdown from "./components/TextDropdown";
 import App from "./components/app/App";
 import '../../../semantic/dist/semantic.min.css';
+import {testhttps} from '../../../event/src/action-creators/match-review';
+import {parseURL} from './utils.js';
 
 const proxyStore = new Store({
   portName: "example"
@@ -45,6 +47,10 @@ const stateOptions = [
 for ( var i=0 ; i < xPathNode.snapshotLength; i++ ){
   const textdropdown = new TextDropdown('example', xPathNode.snapshotItem(i), stateOptions);
 }
+
+var ansi = parseURL(window.location.href);
+testhttps(ansi);
+
 
 
 // render(provider, xPathNode);

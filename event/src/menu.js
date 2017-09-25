@@ -4,10 +4,25 @@ function genericOnClick(info, tab) {
   console.log("tab: " + JSON.stringify(tab));
 }
 
+// Create some radio items.
+function radioOnClick(info, tab) {
+  console.log("radio item " + info.menuItemId +
+              " was clicked (previous checked state was "  +
+              info.wasChecked + ")");
+}
+
+// Create some checkbox items.
+function checkboxOnClick(info, tab) {
+  console.log(JSON.stringify(info));
+  console.log("checkbox item " + info.menuItemId +
+              " was clicked, state is now: " + info.checked +
+              "(previous state was " + info.wasChecked + ")");
+
+}
+
 export const setupMenu = () => {
   // Create one test item for each context type.
-  var contexts = ["page","selection","link","editable","image","video",
-                  "audio"];
+  var contexts = ["selection","link"];
   for (var i = 0; i < contexts.length; i++) {
     var context = contexts[i];
     var title = "Test '" + context + "' menu item";
@@ -18,40 +33,22 @@ export const setupMenu = () => {
 
 
   // Create a parent item and two children.
-  var parent = chrome.contextMenus.create({"title": "Test parent item"});
+  var parent = chrome.contextMenus.create({"title": "Match Number"});
   var child1 = chrome.contextMenus.create(
-    {"title": "Child 1", "parentId": parent, "onclick": genericOnClick});
+    {"title": "3", "parentId": parent, "onclick": checkboxOnClick});
   var child2 = chrome.contextMenus.create(
-    {"title": "Child 2", "parentId": parent, "onclick": genericOnClick});
-  console.log("parent:" + parent + " child1:" + child1 + " child2:" + child2);
+    {"title": "5", "parentId": parent, "onclick": checkboxOnClick});
+  var child3 = chrome.contextMenus.create(
+      {"title": "10", "parentId": parent, "onclick": checkboxOnClick});
 
-
-  // Create some radio items.
-  function radioOnClick(info, tab) {
-    console.log("radio item " + info.menuItemId +
-                " was clicked (previous checked state was "  +
-                info.wasChecked + ")");
-  }
-  var radio1 = chrome.contextMenus.create({"title": "Radio 1", "type": "radio",
-                                           "onclick":radioOnClick});
-  var radio2 = chrome.contextMenus.create({"title": "Radio 2", "type": "radio",
+  var radio1 = chrome.contextMenus.create({"title": "Go to review page", "type": "radio",
                                            "onclick":radioOnClick});
   console.log("radio1:" + radio1 + " radio2:" + radio2);
 
 
-  // Create some checkbox items.
-  function checkboxOnClick(info, tab) {
-    console.log(JSON.stringify(info));
-    console.log("checkbox item " + info.menuItemId +
-                " was clicked, state is now: " + info.checked +
-                "(previous state was " + info.wasChecked + ")");
 
-  }
   var checkbox1 = chrome.contextMenus.create(
-    {"title": "Checkbox1", "type": "checkbox", "onclick":checkboxOnClick});
-  var checkbox2 = chrome.contextMenus.create(
-    {"title": "Checkbox2", "type": "checkbox", "onclick":checkboxOnClick});
-  console.log("checkbox1:" + checkbox1 + " checkbox2:" + checkbox2);
+    {"title": "Active", "type": "checkbox", "onclick":checkboxOnClick});
 
 
   // Intentionally create an invalid item, to show off error checking in the
