@@ -9,3 +9,7 @@ export const parseURL = (url) => {
       return '';
     }
 }
+
+export const dropdownOption = (options) => {
+  return ;
+}

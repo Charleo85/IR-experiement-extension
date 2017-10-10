@@ -1,36 +1,28 @@
-import React, {Component} from 'react';
-import {render, unmountComponentAtNode} from 'react-dom';
+import React, {Component, PureComponent} from 'react';
+
 import {connect} from 'react-redux';
 import {get} from 'lodash';
 import { Dropdown, Table } from 'semantic-ui-react';
 
-class TextDropdown {
-  constructor(text, container, options) {
-    this._container = container;
-    this._text = text;
-    this._options = options;
-    this._render();
+
+const openReviewLink = (id) => {
+  window.open('https://www.amazon.com/gp/customer-reviews/'+id);
+};
+
+export class TextDropdown extends PureComponent {
+  constructor(props) {
+    super();
   }
 
-  _render() {
-    render(
-      <Dropdown text={this._text} openOnFocus simple item options={this._options} />,
-      this._container
+  render(){
+    return (
+      <Dropdown text={this.props.text}>
+        <Dropdown.Menu>
+          {this.props.options.map(option => (
+            <Dropdown.item text={option.text} onClick={openReviewLink(option.key)}/>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
     );
   }
-
-  get text() {
-    return this.text;
-  }
-
-  set text(value) {
-    this._text = value;
-    this._render();
-  }
-
-  destroy() {
-    unmountComponentAtNode(this._container);
-  }
 }
-
-export default TextDropdown;
