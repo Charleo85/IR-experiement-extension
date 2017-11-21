@@ -21,6 +21,18 @@ const provider = (
   </Provider>
 );
 
+const xpathMap = {
+  Size: '',
+  Graphics: '',
+  Processor: '',
+  Memory: '',
+  Software: '',
+  HardDrive: '',
+  Ports: '',
+  Battery: ''
+}
+// document.head.insert
+
 const anchor = document.createElement("div");
 anchor.id = "rcr-anchor";
 document.body.insertBefore(anchor, document.body.childNodes[0]);
@@ -65,14 +77,20 @@ const replaceContextAtXpath = (xpath, options) => {
 //           ]
 //   }
 // ];
+//
+// for (var i=0; i<options.length; i++){
+//   replaceContextAtXpath(options[i].xpath, options[i].option);
+// }
+
 
 var ansi = parseURL(window.location.href);
+
 matchReview(ansi, (res)=> forEach(res, (val, key)=>{
     if (Array.isArray(val) && val.length != 0){
       const options = [];
       for (var i=0; i < val.length; i++){
         forEach(val[i], (v, k)=>{
-          options.push({text: k, key: v[1], value: v[0]});
+          options.push({text: k, key: v[1], value: v[0], score:v[2]});
         })
       }
       replaceContextAtXpath(key, options);

@@ -26,5 +26,8 @@
     "matches": ["https://www.amazon.com/*"],
     "css": [],
     "js": ["content.js"]
-  }]
+  }],
+  "web_accessible_resources": [
+    "icons/*.png"
+  ]
 }

@@ -33,12 +33,19 @@ module.exports = {
         include: [path.join(__dirname, 'src'), path.join(__dirname, '../','semantic', 'dist')],
       },
       {
-        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        test: /\.png$/,
+        loader: "url-loader",
+        include: [path.join(__dirname, '../','semantic', 'dist', 'themes', 'default', 'assets', 'images')],
+        query: { mimetype: "image/png" }
+      },
+      {
+        test: /\.(jpg|gif|svg|eot|ttf|woff|woff2)$/,
         loader: 'url-loader',
+        include: [path.join(__dirname, '../','semantic', 'dist', 'themes', 'default', 'assets', 'fonts'), path.join(__dirname, '../','semantic', 'dist', 'themes', 'basic', 'assets', 'fonts')],
         options: {
           limit: 10000
         }
       }
-    ]
+    ],
   }
 };

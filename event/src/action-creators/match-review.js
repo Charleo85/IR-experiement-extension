@@ -1,5 +1,5 @@
 const request = require('superagent');
-const url = 'https://56b65b24.ngrok.io';
+const url = 'https://2aafff86.ngrok.io';
 
 export const matchReview = (asin, callback) => request
   .get(url+'/api/amazon')
