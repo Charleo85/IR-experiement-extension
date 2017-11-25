@@ -45,22 +45,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // document.addEventListener('click', () => {
-    //   this.props.dispatch({
-    //     type: 'ADD_COUNT'
-    //   });
-    // });
-    let productID = parseURL(window.location.href);
-    var info = {};
-    if (productID != ''){
-      info = parseTitle();
+    if (this.props.pageType.type === 'product'){
+      let productID = this.props.pageType.id;
+      var info = parseTitle();
+      this.props.dispatch({
+        type: 'PRODUCT_INFO',
+        payload: {productID, ...info}
+      });
     }
-    // console.log(productID);
-    // console.log(info.detail);
-    this.props.dispatch({
-      type: 'PRODUCT_INFO',
-      payload: {productID, ...info}
-    });
+
 
   }
 
@@ -68,7 +61,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        {`injected!!! ${this.props.productID}`}
+        {`injected!!! ${this.props.pageType.id}`}
       </div>
     );
   }

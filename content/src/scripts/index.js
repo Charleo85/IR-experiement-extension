@@ -7,7 +7,7 @@ import InjectNode from "./components/InjectNode";
 
 import App from "./components/app/App";
 import '../../../semantic/dist/semantic.min.css';
-import {matchReview} from '../../../event/src/action-creators/match-review';
+import {matchReview, matchHighlight} from '../../../event/src/action-creators/match-review';
 import {parseURL} from './utils.js';
 import {forEach} from 'lodash';
 
@@ -15,23 +15,13 @@ const proxyStore = new Store({
   portName: "example"
 });
 
+const {type, id} = parseURL(window.location.href);
+
 const provider = (
   <Provider store={proxyStore}>
-    <App />
+    <App pageType={{type, id}} />
   </Provider>
 );
-
-const xpathMap = {
-  Size: '',
-  Graphics: '',
-  Processor: '',
-  Memory: '',
-  Software: '',
-  HardDrive: '',
-  Ports: '',
-  Battery: ''
-}
-// document.head.insert
 
 const anchor = document.createElement("div");
 anchor.id = "rcr-anchor";
@@ -58,6 +48,56 @@ const replaceContextAtXpath = (xpath, options) => {
   const injectnode = new InjectNode(textdropdown, xPathNode);
 }
 
+const selectColor = (score) => {
+  if (score > 0.3){
+    return '#FFB74D';
+  }else if (score < -0.3){
+    return '#64B5F6';
+  }else{
+    return '#B9F6CA';
+  }
+}
+
+const highlightHtml = (html, score) =>{
+  const colorString = selectColor(score);
+  return `<span style="background-image: linear-gradient(to bottom, ${colorString}, ${colorString})">${html}</span>`
+}
+
+if (type === 'product'){
+  matchReview(id, (res)=> forEach(res, (val, key)=>{
+      if (Array.isArray(val) && val.length != 0){
+        const options = [];
+        for (var i=0; i < val.length; i++){
+          forEach(val[i], (v, k)=>{
+            options.push({text: k, key: v[1], value: v[0], score:v[2]});
+          })
+        }
+        replaceContextAtXpath(key, options)
+      }
+    })
+  );
+}else if(type === 'review'){
+  matchHighlight(id, (res)=> {
+    if (res.content && res.content.length > 0){
+        const xPathNode = getXPathNode("//span[contains(@class, 'review-text')]");
+        var html = xPathNode.innerHTML;
+        forEach(res.content, (value)=>{
+          html = html.replace(value.sentence, highlightHtml(value.sentence, value.sentiment));
+        });
+        xPathNode.innerHTML = html;
+      }
+    }
+  );
+}
+
+/*
+<span style="background-image: linear-gradient(to bottom, rgba(255, 205, 172, 1), rgba(255, 205, 172, 1))">
+
+<span style={{backgroundImage: linear-gradient(to bottom, rgba(255, 205, 172, 1), rgba(255, 205, 172, 1))}}}>
+</span>
+
+*/
+
 // const xPathNode = document.evaluate(
 //   `//*[@id="feature-bullets"]/ul/li[not(@id="replacementPartsFitmentBullet")]/span[@class="a-list-item"]`,
 //   document,
@@ -82,18 +122,14 @@ const replaceContextAtXpath = (xpath, options) => {
 //   replaceContextAtXpath(options[i].xpath, options[i].option);
 // }
 
-
-var ansi = parseURL(window.location.href);
-
-matchReview(ansi, (res)=> forEach(res, (val, key)=>{
-    if (Array.isArray(val) && val.length != 0){
-      const options = [];
-      for (var i=0; i < val.length; i++){
-        forEach(val[i], (v, k)=>{
-          options.push({text: k, key: v[1], value: v[0], score:v[2]});
-        })
-      }
-      replaceContextAtXpath(key, options);
-    }
-  })
-);
+// const xpathMap = {
+//   Size: '',
+//   Graphics: '',
+//   Processor: '',
+//   Memory: '',
+//   Software: '',
+//   HardDrive: '',
+//   Ports: '',
+//   Battery: ''
+// }
+// document.head.insert
