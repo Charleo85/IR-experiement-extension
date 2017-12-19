@@ -5,7 +5,7 @@ import {get} from 'lodash';
 import { Dropdown, Table, Icon } from 'semantic-ui-react';
 
 
-const openReviewLink = (id, text) => () => {
+const openReviewLink = (id, text, score, store) => () => {
   // chrome.tabs.create({url:'https://www.amazon.com/gp/customer-reviews/'+id},
   // function(tab){
   //     chrome.tabs.sendRequest(tab.id, {highlight: text}, function(response) {
@@ -13,7 +13,11 @@ const openReviewLink = (id, text) => () => {
   //     });
   //   }
   // );
-
+  // console.log(store.getState());
+  store.dispatch({
+    type: 'REVIEW_INFO',
+    payload: {id, text, score}
+  });
   window.open('https://www.amazon.com/gp/customer-reviews/'+id);
 };
 
@@ -41,7 +45,7 @@ export class TextDropdown extends PureComponent {
       <Dropdown text={this.props.text} style={{width:'1200px'}}>
          <Dropdown.Menu scrolling>
              {this.props.options.map(option => (
-               <Dropdown.Item onClick={openReviewLink(option.key, option.text)} key={option.key} content={option.text} image={selectIcon(option.score)}></Dropdown.Item>
+               <Dropdown.Item onClick={openReviewLink(option.key, option.text, option.score, this.props.store)} key={option.key} content={option.text} image={selectIcon(option.score)}></Dropdown.Item>
              ))}
          </Dropdown.Menu>
       </Dropdown>

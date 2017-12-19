@@ -1,5 +1,10 @@
+import {matchedReviews} from './fakeResponse.js'
 const request = require('superagent');
-const url = 'https://032e7e8d.ngrok.io';
+const url = 'https://cb7bce6a.ngrok.io';
+
+// export const matchReview = (asin, callback) => {
+//   callback(matchedReviews);
+// }
 
 export const matchReview = (asin, callback) => request
   .get(url+'/api/amazon')

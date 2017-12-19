@@ -6,7 +6,7 @@ import {get} from 'lodash';
 
 
 const renderObj = (obj) => {
-  console.log(obj);
+  // console.log(obj);
   // return <Table.Row></Table.Row>
   const ret = (Object.entries(obj)).reduce(
     (renderBuffer, element)=>{

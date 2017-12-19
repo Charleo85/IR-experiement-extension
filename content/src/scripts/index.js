@@ -9,7 +9,7 @@ import App from "./components/app/App";
 import '../../../semantic/dist/semantic.min.css';
 import {matchReview, matchHighlight} from '../../../event/src/action-creators/match-review';
 import {parseURL} from './utils.js';
-import {forEach} from 'lodash';
+import {forEach, get} from 'lodash';
 
 const proxyStore = new Store({
   portName: "example"
@@ -44,7 +44,7 @@ const getXPathNode = (xpath) => {
 
 const replaceContextAtXpath = (xpath, options) => {
   const xPathNode = getXPathNode(xpath);
-  const textdropdown = React.createElement(TextDropdown, {text: xPathNode.textContent, options: options});
+  const textdropdown = React.createElement(TextDropdown, {text: xPathNode.textContent, options: options, store: proxyStore});
   const injectnode = new InjectNode(textdropdown, xPathNode);
 }
 
@@ -77,18 +77,30 @@ if (type === 'product'){
     })
   );
 }else if(type === 'review'){
-  matchHighlight(id, (res)=> {
-    if (res.content && res.content.length > 0){
+  // wait for the store to connect to the background page
+  proxyStore.ready().then(() => {
+    // The store implements the same interface as Redux's store
+    // so you can use tools like `react-redux` no problem!
+    const reviews = get(proxyStore.getState(), 'productInfo.reviews.reviewID', null);
+    // console.log(reviews);
+    if (reviews && reviews.text && reviews.score){
         const xPathNode = getXPathNode("//span[contains(@class, 'review-text')]");
         var html = xPathNode.innerHTML;
-        forEach(res.content, (value)=>{
-          html = html.replace(value.sentence, highlightHtml(value.sentence, value.sentiment));
-        });
-        xPathNode.innerHTML = html;
-      }
+        xPathNode.innerHTML = html.replace(reviews.text, highlightHtml(reviews.text, reviews.score));
     }
-  );
+  });
 }
+  // matchHighlight(id, (res)=> {
+  //   if (res.content && res.content.length > 0){
+  //       const xPathNode = getXPathNode("//span[contains(@class, 'review-text')]");
+  //       var html = xPathNode.innerHTML;
+  //       forEach(res.content, (value)=>{
+  //         html = html.replace(value.sentence, highlightHtml(value.sentence, value.sentiment));
+  //       });
+  //       xPathNode.innerHTML = html;
+  //     }
+  //   }
+  // );
 
 /*
 <span style="background-image: linear-gradient(to bottom, rgba(255, 205, 172, 1), rgba(255, 205, 172, 1))">

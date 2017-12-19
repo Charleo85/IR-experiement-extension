@@ -52,11 +52,12 @@ class App extends Component {
         type: 'PRODUCT_INFO',
         payload: {productID, ...info}
       });
+    }else{
+      this.props.dispatch({
+        type: 'RESTORE_STATES',
+      });
     }
-
-
   }
-
 
   render() {
     return (
