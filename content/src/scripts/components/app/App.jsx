@@ -62,9 +62,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        {`injected!!! ${this.props.pageType.id}`}
       </div>
     );
+    //        {`injected!!! ${this.props.pageType.id}`}
   }
 }
 
