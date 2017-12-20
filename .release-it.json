@@ -1,0 +1,17 @@
+{
+  "buildCommand": "zip -r extension.zip build",
+  "src": {
+    "afterReleaseCommand": "rm extension.zip"
+  },
+  "github": {
+    "tokenRef": "GITHUB_TOKEN",
+    "release": true,
+    "assets": "./extension.zip"
+  },
+  "prompt": {
+    "src": {
+      "status": true
+    }
+  },
+  "buildCommand": "npm run build"
+}
