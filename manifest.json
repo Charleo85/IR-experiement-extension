@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Amazon Shopping Assistant",
   "description": "We read amazon review for you",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -23,11 +23,17 @@
     "contextMenus",
     "https://www.amazon.com/*"
   ],
-  "content_scripts": [{
-    "matches": ["https://www.amazon.com/*"],
-    "css": [],
-    "js": ["content.js"]
-  }],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.amazon.com/*"
+      ],
+      "css": [],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
   "web_accessible_resources": [
     "icons/*.png"
   ]
