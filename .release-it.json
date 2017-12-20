@@ -1,5 +1,5 @@
 {
-  "buildCommand": "zip -r extension.zip build",
+  "buildCommand": "json -I -f manifest.json -e \"this.version=%s\" && npm run build && zip -r extension.zip build ",
   "src": {
     "afterReleaseCommand": "rm extension.zip"
   },
@@ -12,6 +12,5 @@
     "src": {
       "status": true
     }
-  },
-  "buildCommand": "npm run build"
+  }
 }
