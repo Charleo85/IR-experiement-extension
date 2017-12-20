@@ -1,6 +1,6 @@
 # IR-experiement-extension
 
-To install and give it a try, simply go to chrome://extensions and load the latest Chrome Extension [release](https://github.com/Charleo85/IR-experiement-extension/releases/tag/0.1) from your directory.
+To install and give it a try, simply go to chrome://extensions and load the latest Chrome Extension [release](https://github.com/Charleo85/IR-experiement-extension/releases) from your directory.
 
 The extension 🤖 is designed to digest thousands of amazon.com reviews for shoppers:
 
@@ -9,7 +9,13 @@ The extension 🤖 is designed to digest thousands of amazon.com reviews for sho
 - the experimental support is currently limited on laptop catagory
 
 Feature demo on live amazon laptop product and review page:
+
+Scroll down to review matched relevant review sentences on certain product attributes:
+
 ![On Product  Page](./img/product_page.png)
+
+click review sentence to visit the entire review in details:
+
 ![On Review Page](./img/review_page.png)
 
 
