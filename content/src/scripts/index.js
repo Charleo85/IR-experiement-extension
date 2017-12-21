@@ -7,9 +7,11 @@ import InjectNode from "./components/InjectNode";
 
 import App from "./components/app/App";
 import '../../../semantic/dist/semantic.min.css';
+import '../../../semantic/dist/extension.css';
 import {matchReview, matchHighlight} from '../../../event/src/action-creators/match-review';
 import {parseURL} from './utils.js';
 import {forEach, get} from 'lodash';
+import 'mark.js/dist/mark.es6.js';
 
 const proxyStore = new Store({
   portName: "example"
@@ -48,19 +50,14 @@ const replaceContextAtXpath = (xpath, options) => {
   const injectnode = new InjectNode(textdropdown, xPathNode);
 }
 
-const selectColor = (score) => {
+const selectHighlightColor = (score) => {
   if (score > 0.3){
-    return '#FFB74D';
+    return 'orange';
   }else if (score < -0.3){
-    return '#64B5F6';
+    return 'blue';
   }else{
-    return '#B9F6CA';
+    return 'green';
   }
-}
-
-const highlightHtml = (html, score) =>{
-  const colorString = selectColor(score);
-  return `<span style="background-image: linear-gradient(to bottom, ${colorString}, ${colorString})">${html}</span>`
 }
 
 if (type === 'product'){
@@ -83,10 +80,17 @@ if (type === 'product'){
     // so you can use tools like `react-redux` no problem!
     const reviews = get(proxyStore.getState(), 'productInfo.reviews.reviewID', null);
     // console.log(reviews);
-    if (reviews && reviews.text && reviews.score){
+    if (reviews && reviews.text && reviews.score != null){
         const xPathNode = getXPathNode("//span[contains(@class, 'review-text')]");
-        var html = xPathNode.innerHTML;
-        xPathNode.innerHTML = html.replace(reviews.text, highlightHtml(reviews.text, reviews.score));
+        const instance = new Mark(xPathNode);
+        instance.mark(reviews.text, {ignoreJoiners:true, separateWordSearch: false,
+            each: function(element) {
+              element.classList.add(selectHighlightColor(reviews.score));
+              // setTimeout(function() {
+              //   element.classList.add("animate");
+              // }, 250);
+            }
+          });
     }
   });
 }
@@ -101,14 +105,6 @@ if (type === 'product'){
   //     }
   //   }
   // );
-
-/*
-<span style="background-image: linear-gradient(to bottom, rgba(255, 205, 172, 1), rgba(255, 205, 172, 1))">
-
-<span style={{backgroundImage: linear-gradient(to bottom, rgba(255, 205, 172, 1), rgba(255, 205, 172, 1))}}}>
-</span>
-
-*/
 
 // const xPathNode = document.evaluate(
 //   `//*[@id="feature-bullets"]/ul/li[not(@id="replacementPartsFitmentBullet")]/span[@class="a-list-item"]`,

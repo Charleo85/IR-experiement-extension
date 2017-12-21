@@ -45,6 +45,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-util": "^3.0.7",
     "json": "^9.0.6",
+    "mark.js": "^8.11.0",
     "prettier": "^1.9.2",
     "release-it": "^5.1.2",
     "resolve-url-loader": "^2.2.1",

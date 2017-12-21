@@ -1,0 +1,22 @@
+mark {
+  background-position: 100% 0;
+  background-size: 200% 100%;
+  transition: all .5s ease;
+  color: #000;
+}
+
+mark.animate {
+  background-position: 0 0;
+}
+
+mark.orange {
+  background: linear-gradient(to right, #FFB74D, #FFB74D);
+}
+
+mark.blue {
+  background: linear-gradient(to right, #64B5F6, #64B5F6);
+}
+
+mark.green {
+  background: linear-gradient(to right, #B9F6CA, #B9F6CA);
+}
