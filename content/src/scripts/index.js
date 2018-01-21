@@ -8,6 +8,11 @@ import InjectNode from "./components/InjectNode";
 import App from "./components/app/App";
 import '../../../semantic/dist/semantic.min.css';
 import '../../../semantic/dist/extension.css';
+// import '../../../semantic/dist/themes/default/assets/fonts/icons.eot';
+// import '../../../semantic/dist/themes/default/assets/fonts/icons.svg';
+// import '../../../semantic/dist/themes/default/assets/fonts/icons.ttf';
+// import '../../../semantic/dist/themes/default/assets/fonts/icons.woff';
+
 import {matchReview, matchHighlight} from '../../../event/src/action-creators/match-review';
 import {parseURL} from './utils.js';
 import {forEach, get} from 'lodash';
@@ -94,6 +99,9 @@ if (type === 'product'){
     }
   });
 }
+
+// document.getElementByClass("rcr-anchor")
+
   // matchHighlight(id, (res)=> {
   //   if (res.content && res.content.length > 0){
   //       const xPathNode = getXPathNode("//span[contains(@class, 'review-text')]");

@@ -1,9 +1,7 @@
-import "babel-polyfill";
-
 const path = require("path");
 
 module.exports = {
-  entry: ["babel-polyfill", "./content/src/scripts/index.js"],
+  entry: ["./content/src/scripts/index.js"],
 
   output: {
     filename: "content.js",
@@ -12,40 +10,42 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [".js", ".jsx", ".scss", ".json"],
+    extensions: [".js", ".jsx", ".scss", ".json", ".css"],
     modules: ["node_modules"]
   },
 
   module: {
-    loaders: [
+    rules:[
       {
         test: /\.(jsx|js)?$/,
-        loader: "babel-loader",
         exclude: /(node_modules)/,
         include: path.join(__dirname, "src"),
-        query: {
-          presets: ["es2015", "react"]
+        use: {
+          loader: "babel-loader",
+          options: {
+            babelrc: true
+          }
         }
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-        include: [path.join(__dirname, 'src'), path.join(__dirname, '../','semantic', 'dist')],
-      },
-      {
-        test: /\.png$/,
-        loader: "url-loader",
-        include: [path.join(__dirname, '../','semantic', 'dist', 'themes', 'default', 'assets', 'images')],
-        query: { mimetype: "image/png" }
+        use: ['style-loader', 'css-loader', 'resolve-url-loader'],
+        include: [path.join(__dirname, 'src'),
+                  path.join(__dirname, '../','semantic', 'dist'),
+                  path.join(__dirname, '../','semantic', 'dist', 'themes', 'default', 'assets', 'fonts')],
       },
       {
         test: /\.(jpg|gif|svg|eot|ttf|woff|woff2)$/,
-        loader: 'url-loader',
-        include: [path.join(__dirname, '../','semantic', 'dist', 'themes', 'default', 'assets', 'fonts'), path.join(__dirname, '../','semantic', 'dist', 'themes', 'basic', 'assets', 'fonts')],
-        options: {
-          limit: 10000
-        }
+        use: ['url-loader'],
+        include: [path.join(__dirname, 'src'),
+                  path.join(__dirname, '../','semantic', 'dist'),
+                  path.join(__dirname, '../','semantic', 'dist', 'themes', 'default', 'assets', 'fonts')],
+      },
+      {
+        test: /\.png$/,
+        include: [path.join(__dirname, '../','semantic', 'dist', 'themes', 'default', 'assets', 'images')],
+        use: ['file-loader']
       }
-    ],
+    ]
   }
 };

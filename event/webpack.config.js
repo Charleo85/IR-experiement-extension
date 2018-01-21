@@ -1,8 +1,7 @@
-import "babel-polyfill";
 const path = require("path");
 
 module.exports = {
-  entry: ["babel-polyfill", "./event/src/index.js"],
+  entry: ["./event/src/index.js"],
 
   output: {
     filename: "event.js",
@@ -15,14 +14,16 @@ module.exports = {
   },
 
   module: {
-    loaders: [
+    rules:[
       {
-        test: /\.(js)?$/,
-        loader: "babel-loader",
+        test: /\.(jsx|js)?$/,
         exclude: /(node_modules)/,
         include: path.join(__dirname, "src"),
-        query: {
-          presets: ["es2015", "react"]
+        use: {
+          loader: "babel-loader",
+          options: {
+            babelrc: true
+          }
         }
       }
     ]

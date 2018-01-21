@@ -61,8 +61,8 @@ gulp.task("clean", cb => {
 gulp.task("build", [
   "copy-manifest",
   "copy-icons",
-  "popup-js",
   "popup-html",
+  // "popup-js",
   "event-js",
   "content-js"
 ]);
