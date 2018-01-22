@@ -12,6 +12,19 @@ export const selectIcon = (score) => {
   }
 }
 
+export const displayRating = (rating) => {
+  switch (rating) {
+    case -1: return 'Click to feedback';
+    case 0: return '-: No opinion';
+    case 1: return '1: Not related';
+    case 2: return '2: A little related';
+    case 3: return '3: Kind of related';
+    case 4: return '4: Quite related';
+    case 5: return '5: Matches exactly';
+    default: return 'Click to feedback';
+  }
+}
+
 export const displaySentiment = (score) => {
   return (parseInt((score+1)*50)).toString() + '%';
 }
