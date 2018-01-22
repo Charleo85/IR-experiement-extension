@@ -62,7 +62,7 @@ gulp.task("build", [
   "copy-manifest",
   "copy-icons",
   "popup-html",
-  // "popup-js",
+  "popup-js",
   "event-js",
   "content-js"
 ]);
