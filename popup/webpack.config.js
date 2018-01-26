@@ -26,6 +26,25 @@ module.exports = {
             babelrc: true
           }
         }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'resolve-url-loader'],
+        include: [path.join(__dirname, 'src'),
+                  path.join(__dirname, '../','semantic', 'dist'),
+                  path.join(__dirname, '../','semantic', 'dist', 'themes', 'default', 'assets', 'fonts')],
+      },
+      {
+        test: /\.(jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        use: ['url-loader'],
+        include: [path.join(__dirname, 'src'),
+                  path.join(__dirname, '../','semantic', 'dist'),
+                  path.join(__dirname, '../','semantic', 'dist', 'themes', 'default', 'assets', 'fonts')],
+      },
+      {
+        test: /\.png$/,
+        include: [path.join(__dirname, '../','semantic', 'dist', 'themes', 'default', 'assets', 'images')],
+        use: ['file-loader']
       }
     ]
   }

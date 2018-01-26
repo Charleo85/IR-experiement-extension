@@ -3,13 +3,15 @@ import React, { Component, PureComponent } from "react";
 import { connect } from "react-redux";
 import { get } from "lodash";
 import { Dropdown, Table, Icon, Rating, Label } from "semantic-ui-react";
-import { displaySentiment, selectIcon, displayRating } from "../utils.js";
+import { displaySentiment, selectIcon, displayRating } from "../utils";
+import { ratingAction, clickAction } from "../../../../event/src/action-creators/feedback"
 
-const openReviewLink = (id, text, score, store) => () => {
+const openReviewLink = (id, text, score, store, feedbackID) => () => {
   store.dispatch({
     type: "REVIEW_INFO",
     payload: { id, text, score }
   });
+  clickAction(feedbackID)
   window.open("https://www.amazon.com/gp/customer-reviews/" + id);
 };
 
@@ -30,12 +32,11 @@ class TextDropdownItem extends Component {
   }
 
   handleRate(event, { rating, maxRating }) {
-    console.log(this.props.option.key, rating);
+    // console.log(this.props.option.feedbackID, rating);
     this.setState({ rating });
-    // this.props.store.dispatch({
-    //   type: 'REVIEW_RATE',
-    //   payload: {id, }
-    // });
+    if (rating != 0){ // do not feedback on no opinion
+      ratingAction(this.props.option.feedbackID, rating);
+    }
   }
 
   render() {
@@ -55,7 +56,7 @@ class TextDropdownItem extends Component {
         </Table.Cell>
         <Table.Cell
           style={{ cursor: "pointer" }}
-          onClick={openReviewLink(option.key, option.text, option.score, store)}
+          onClick={openReviewLink(option.key, option.text, option.score, store, option.feedbackID)}
         >
           {option.text}
         </Table.Cell>

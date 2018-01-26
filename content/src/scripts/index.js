@@ -8,13 +8,9 @@ import InjectNode from "./components/InjectNode";
 import App from "./components/app/App";
 import '../../../semantic/dist/semantic.min.css';
 import '../../../semantic/dist/extension.css';
-// import '../../../semantic/dist/themes/default/assets/fonts/icons.eot';
-// import '../../../semantic/dist/themes/default/assets/fonts/icons.svg';
-// import '../../../semantic/dist/themes/default/assets/fonts/icons.ttf';
-// import '../../../semantic/dist/themes/default/assets/fonts/icons.woff';
 
 import {matchReview, matchHighlight} from '../../../event/src/action-creators/match-review';
-import {parseURL} from './utils.js';
+import {parseURL} from './utils';
 import {forEach, get} from 'lodash';
 import 'mark.js/dist/mark.es6.js';
 
@@ -71,7 +67,7 @@ if (type === 'product'){
         const options = [];
         for (var i=0; i < val.length; i++){
           forEach(val[i], (v, k)=>{
-            options.push({text: k, key: v[1], value: v[0], score:v[2]});
+            options.push({text: k, key: v[1], value: v[0], score:v[2], feedbackID: v[3]});
           })
         }
         replaceContextAtXpath(key, options)

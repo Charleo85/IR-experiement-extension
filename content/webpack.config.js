@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
   entry: ["./content/src/scripts/index.js"],
-
+  devtool: "source-map",
   output: {
     filename: "content.js",
     path: path.join(__dirname, "../", "build"),
