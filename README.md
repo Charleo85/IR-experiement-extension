@@ -1,4 +1,4 @@
-# IR-experiement-extension
+# IR-experiment-extension
 
 To install and give it a try, simply go to chrome://extensions and load the latest Chrome Extension [release](https://github.com/Charleo85/IR-experiement-extension/releases) from your directory.
 
