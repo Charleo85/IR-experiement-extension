@@ -47,7 +47,7 @@ const highlightReview = () => {
   proxyStore.ready().then(() => {
     // The store implements the same interface as Redux's store
     // so you can use tools like `react-redux` no problem!
-    const reviews = get(proxyStore.getState(), 'productInfo.reviews.reviewID', null);
+    const reviews = get(proxyStore.getState(), 'impression.reviews.reviewID', null);
     if (reviews && reviews.text && reviews.score != null){
         const xPathNode = getXPathNode("//span[contains(@class, 'review-text')]");
         const instance = new Mark(xPathNode);
@@ -111,7 +111,7 @@ const accumlateReview = (asin, start, count, xpathSet={}) => {
       }
     })
     if (res.has_more) {
-      accumlateReview(asin, start+count, count, xpathSet);
+      accumlateReview(asin, start+count, 10, xpathSet);
     }else{
       proxyStore.ready().then(() => {console.log(proxyStore.getState())});
     }
@@ -120,7 +120,7 @@ const accumlateReview = (asin, start, count, xpathSet={}) => {
 
 
 if (type === 'product'){
-  accumlateReview(id, 0, 10);
+  accumlateReview(id, 0, 5);
 }else if(type === 'review'){
   highlightReview();
 }
