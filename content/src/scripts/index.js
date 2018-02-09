@@ -2,15 +2,17 @@ import React from "react";
 import {render} from "react-dom";
 import {Provider} from "react-redux";
 import {Store} from "react-chrome-redux";
+import {connect} from 'react-redux';
+
 import {TextDropdown} from "./components/TextDropdown";
 import InjectNode from "./components/InjectNode";
-
 import App from "./components/app/App";
+
 import '../../../semantic/dist/semantic.min.css';
 import '../../../semantic/dist/extension.css';
 
 import {matchReview, matchHighlight} from '../../../event/src/action-creators/match-review';
-import {parseURL} from './utils';
+import {parseURL, selectHighlightColor} from './utils';
 import {forEach, get} from 'lodash';
 import 'mark.js/dist/mark.es6.js';
 
@@ -35,52 +37,17 @@ render(
   document.getElementById("rcr-anchor")
 );
 
-const getXPathNode = (xpath) => {
-  return document.evaluate(
-    xpath,
-    document,
-    null,
-    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-    null
-  ).snapshotItem(0);
-}
+// chrome.runtime.onMessage.addListener(notify);
+// function notify(message) {
+//   console.log(message);
+// }
 
-const replaceContextAtXpath = (xpath, options) => {
-  const xPathNode = getXPathNode(xpath);
-  const textdropdown = React.createElement(TextDropdown, {text: xPathNode.textContent, options: options, store: proxyStore});
-  const injectnode = new InjectNode(textdropdown, xPathNode);
-}
-
-const selectHighlightColor = (score) => {
-  if (score > 0.3){
-    return 'orange';
-  }else if (score < -0.3){
-    return 'blue';
-  }else{
-    return 'green';
-  }
-}
-
-if (type === 'product'){
-  matchReview(id, (res)=> forEach(res, (val, key)=>{
-      if (Array.isArray(val) && val.length != 0){
-        const options = [];
-        for (var i=0; i < val.length; i++){
-          forEach(val[i], (v, k)=>{
-            options.push({text: k, key: v[1], value: v[0], score:v[2], feedbackID: v[3]});
-          })
-        }
-        replaceContextAtXpath(key, options)
-      }
-    })
-  );
-}else if(type === 'review'){
+const highlightReview = () => {
   // wait for the store to connect to the background page
   proxyStore.ready().then(() => {
     // The store implements the same interface as Redux's store
     // so you can use tools like `react-redux` no problem!
     const reviews = get(proxyStore.getState(), 'productInfo.reviews.reviewID', null);
-    // console.log(reviews);
     if (reviews && reviews.text && reviews.score != null){
         const xPathNode = getXPathNode("//span[contains(@class, 'review-text')]");
         const instance = new Mark(xPathNode);
@@ -94,6 +61,68 @@ if (type === 'product'){
           });
     }
   });
+}
+
+const getXPathNode = (xpath) => {
+  return document.evaluate(
+    xpath,
+    document,
+    null,
+    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+    null
+  ).snapshotItem(0);
+}
+
+const mapStateToPropsByXPath = (xpath) => (state) => {
+  return {
+    options: get(state, ['productInfo', 'content', xpath], [])
+  };
+};
+
+const replaceContextAtXpath = (xpath) => {
+  const xPathNode = getXPathNode(xpath);
+  const XpathTextDropdown = connect(mapStateToPropsByXPath(xpath))(TextDropdown);
+
+  const textdropdown = React.createElement(XpathTextDropdown, {text: xPathNode.textContent, store: proxyStore});
+  const injectnode = new InjectNode(textdropdown, xPathNode);
+}
+
+const accumlateReview = (asin, start, count, xpathSet={}) => {
+  matchReview({asin, start, count}, (res)=> {
+
+    forEach(res, (val, xpath)=>{
+      if (Array.isArray(val) && val.length != 0){
+
+        const options = [];
+        for (var i=0; i < val.length; i++){
+          forEach(val[i], (v, k)=>{
+            options.push({text: k, key: v[1], value: v[0], score:v[2], feedbackID: v[3]});
+          })
+        }
+
+        proxyStore.dispatch({
+          type: "ADD_CONTENT",
+          payload: { xpath, options}
+        });
+        if (!xpathSet[xpath]){
+          replaceContextAtXpath(xpath);
+          xpathSet[xpath] = true;
+        }
+      }
+    })
+    if (res.has_more) {
+      accumlateReview(asin, start+count, count, xpathSet);
+    }else{
+      proxyStore.ready().then(() => {console.log(proxyStore.getState())});
+    }
+  });
+}
+
+
+if (type === 'product'){
+  accumlateReview(id, 0, 10);
+}else if(type === 'review'){
+  highlightReview();
 }
 
 // document.getElementByClass("rcr-anchor")

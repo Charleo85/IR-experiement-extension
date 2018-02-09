@@ -2,6 +2,16 @@ const positiveIcon = chrome.extension.getURL('/icons/thumbup.png'); //<Icon name
 const negtiveIcon = chrome.extension.getURL('/icons/thumbdown.png');
 const neutralIcon = chrome.extension.getURL('/icons/neutral.png');
 
+export const selectHighlightColor = (score) => {
+  if (score > 0.3){
+    return 'orange';
+  }else if (score < -0.3){
+    return 'blue';
+  }else{
+    return 'green';
+  }
+}
+
 export const selectIcon = (score) => {
   if (score > 0.3){
     return {content: 'Positive', color: 'orange'}//positiveIcon;

@@ -6,8 +6,8 @@ import { Dropdown, Table, Icon, Rating, Label } from "semantic-ui-react";
 import { displaySentiment, selectIcon, displayRating } from "../utils";
 import { ratingAction, clickAction } from "../../../../event/src/action-creators/feedback"
 
-const openReviewLink = (id, text, score, store, feedbackID) => () => {
-  store.dispatch({
+const openReviewLink = (id, text, score, dispatch, feedbackID) => () => {
+  dispatch({
     type: "REVIEW_INFO",
     payload: { id, text, score }
   });
@@ -40,7 +40,7 @@ class TextDropdownItem extends Component {
   }
 
   render() {
-    const { option, store } = this.props;
+    const { option, dispatch } = this.props;
     return (
       <Table.Row>
         <Table.Cell width="2">{sentimentLabel(option.score)}</Table.Cell>
@@ -56,7 +56,7 @@ class TextDropdownItem extends Component {
         </Table.Cell>
         <Table.Cell
           style={{ cursor: "pointer" }}
-          onClick={openReviewLink(option.key, option.text, option.score, store, option.feedbackID)}
+          onClick={openReviewLink(option.key, option.text, option.score, dispatch, option.feedbackID)}
         >
           {option.text}
         </Table.Cell>
@@ -90,6 +90,7 @@ export class TextDropdown extends PureComponent {
   }
   // auto scrolling
   render() {
+    // console.log(this.props)
     return (
       <Dropdown text={this.props.text} style={{ width: "450%", zIndex: "999" }}>
         <Dropdown.Menu scrolling>
@@ -112,7 +113,7 @@ export class TextDropdown extends PureComponent {
               {this.props.options.map(option => (
                 <TextDropdownItem
                   option={option}
-                  store={this.props.store}
+                  dispatch={this.props.dispatch}
                   key={option.key}
                 />
               ))}

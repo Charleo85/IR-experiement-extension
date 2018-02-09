@@ -5,20 +5,26 @@ const initialState = {
   title: "",
   properties: "",
   detail: {},
-  reviews: {}
+  reviews: {},
+  content: {}
 };
+
+// function logger(e) {
+//   chrome.runtime.sendMessage(e);
+// }
 
 export default (prevstate = initialState, action) => {
   switch (action.type) {
     case "PRODUCT_INFO":
+      const {id, title, properties, detail} = get(action, "payload");
       return Object.assign({}, prevstate, {
-        productID: get(action, "payload.productID", prevstate.id),
-        title: get(action, "payload.title", prevstate.title),
-        properties: get(action, "payload.properties", prevstate.properties),
-        detail: get(action, "payload.detail", prevstate.detail)
+        productID: id,
+        title,
+        properties,
+        detail
       });
     case "REVIEW_INFO":
-      const reviewID = get(action, "payload.id", "NULL");
+      const reviewID = get(action, "payload.id");
       if (!reviewID || reviewID === '') {return prevstate;}
       const reviews = Object.assign({}, prevstate.reviews, {
         reviewID : {
@@ -27,6 +33,14 @@ export default (prevstate = initialState, action) => {
         }
       });
       return Object.assign({}, prevstate, {reviews});
+    case "ADD_CONTENT":
+      const {xpath, options} = get(action, "payload");
+      const prevContent = get(prevstate, ["content", xpath], []);
+      const newContent = prevContent.concat(options);
+      const content = Object.assign({}, prevstate.content, {
+        [xpath]: newContent
+      })
+      return Object.assign({}, prevstate, {content});;
     case "RESTORE_STATES":
       return prevstate;
     default:

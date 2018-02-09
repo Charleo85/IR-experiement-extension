@@ -6,9 +6,9 @@ import {url} from '../constant.js';
 //   callback(matchedReviews);
 // }
 
-export const matchReview = (asin, callback) => request
+export const matchReview = (query, callback) => request
   .get(url+'/api/amazon')
-  .query({"asin":asin})
+  .query(query)
   .set("Content-type","application/x-www-form-urlencoded")
   .redirects(0)
   .end(function(err, res){
