@@ -20,17 +20,3 @@ export const matchReview = (query, callback) => request
       }
     }
   });
-
-// export const matchHighlight = (reviewid, callback) => request
-//   .get(url+'/api/review')
-//   .query({"review":reviewid})
-//   .set("Content-type","application/x-www-form-urlencoded")
-//   .redirects(0)
-//   .end(function(err, res){
-//     if (err || !res.ok) {
-//       console.log('Oh no! error');
-//     } else {
-//       // console.log('yay got ' + JSON.stringify(res.body));
-//       callback(res.body);
-//     }
-//   });

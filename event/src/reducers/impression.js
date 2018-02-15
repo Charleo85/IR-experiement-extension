@@ -16,6 +16,8 @@ export default (prevstate = initialState, action) => {
         }
       });
       return Object.assign({}, prevstate, {reviews});
+    case "RESTORE_STATES":
+      return initialState;
     default:
       return prevstate;
   }

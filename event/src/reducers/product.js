@@ -11,9 +11,9 @@ const initialState = {
 export default (prevstate = initialState, action) => {
   switch (action.type) {
     case "PRODUCT_INFO":
-      const {id, title, properties, detail} = get(action, "payload");
+      const {productID, title, properties, detail} = get(action, "payload");
       return Object.assign({}, prevstate, {
-        productID: id,
+        productID,
         title,
         properties,
         detail,

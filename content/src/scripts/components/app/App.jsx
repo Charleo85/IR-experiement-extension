@@ -54,15 +54,14 @@ class App extends Component {
       });
     }else{
       this.props.dispatch({
-        type: 'RESTORE_STATES',
+        type: 'RESTORE_STATES'
       });
     }
   }
 
   render() {
     return (
-      <div>
-      </div>
+      <div></div>
     );
     //        {`injected!!! ${this.props.pageType.id}`}
   }

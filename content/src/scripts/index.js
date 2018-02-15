@@ -113,64 +113,14 @@ const accumlateReview = (asin, start, count, xpathSet={}) => {
     if (res.has_more) {
       accumlateReview(asin, start+count, 10, xpathSet);
     }else{
-      proxyStore.ready().then(() => {console.log(proxyStore.getState())});
+      // proxyStore.ready().then(() => {console.log(proxyStore.getState())});
     }
   });
 }
 
 
 if (type === 'product'){
-  accumlateReview(id, 0, 5);
+  accumlateReview(id, 0, 10);
 }else if(type === 'review'){
   highlightReview();
 }
-
-// document.getElementByClass("rcr-anchor")
-
-  // matchHighlight(id, (res)=> {
-  //   if (res.content && res.content.length > 0){
-  //       const xPathNode = getXPathNode("//span[contains(@class, 'review-text')]");
-  //       var html = xPathNode.innerHTML;
-  //       forEach(res.content, (value)=>{
-  //         html = html.replace(value.sentence, highlightHtml(value.sentence, value.sentiment));
-  //       });
-  //       xPathNode.innerHTML = html;
-  //     }
-  //   }
-  // );
-
-// const xPathNode = document.evaluate(
-//   `//*[@id="feature-bullets"]/ul/li[not(@id="replacementPartsFitmentBullet")]/span[@class="a-list-item"]`,
-//   document,
-//   null,
-//   XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-//   null
-// );
-
-// const options = [
-//   { xpath: '(//table[@id="productDetails_techSpec_section_1"]//th)[4]',
-//     option:[{key: 'R37VK6NRRMTRBL', value: 'R37VK6NRRMTRBL', text: ' 2) ddr4 ram, again the latest and greatest, also happens to be the cheapest ram available' },
-//     {key: 'R3M4X0BR94XKZO', value: 'R3M4X0BR94XKZO', text: ' accessing the ram or hd is as simple as unscrewing a panel under the laptop' }
-//           ]
-//   },
-//   { xpath: '(//table[@id="productDetails_techSpec_section_1"]//th)[5]',
-//     option:[{key: 'R37VK6NRRMTRBL', value: 'R37VK6NRRMTRBL', text: ' the 1tb stock hard drive is installed on the sata slot' }
-//           ]
-//   }
-// ];
-//
-// for (var i=0; i<options.length; i++){
-//   replaceContextAtXpath(options[i].xpath, options[i].option);
-// }
-
-// const xpathMap = {
-//   Size: '',
-//   Graphics: '',
-//   Processor: '',
-//   Memory: '',
-//   Software: '',
-//   HardDrive: '',
-//   Ports: '',
-//   Battery: ''
-// }
-// document.head.insert
