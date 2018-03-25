@@ -48,12 +48,12 @@ const highlightReview = () => {
     // The store implements the same interface as Redux's store
     // so you can use tools like `react-redux` no problem!
     const reviews = get(proxyStore.getState(), 'impression.reviews.reviewID', null);
-    if (reviews && reviews.text && reviews.score != null){
+    if (reviews && reviews.text && reviews.sentiment != null){
         const xPathNode = getXPathNode("//span[contains(@class, 'review-text')]");
         const instance = new Mark(xPathNode);
         instance.mark(reviews.text, {ignoreJoiners:true, separateWordSearch: false,
             each: function(element) {
-              element.classList.add(selectHighlightColor(reviews.score));
+              element.classList.add(selectHighlightColor(reviews.sentiment));
               // setTimeout(function() {
               //   element.classList.add("animate");
               // }, 250);
@@ -83,33 +83,46 @@ const replaceContextAtXpath = (xpath) => {
   const xPathNode = getXPathNode(xpath);
   const XpathTextDropdown = connect(mapStateToPropsByXPath(xpath))(TextDropdown);
 
-  const textdropdown = React.createElement(XpathTextDropdown, {text: xPathNode.textContent, store: proxyStore});
+  const textdropdown = React.createElement(XpathTextDropdown, {text: xPathNode.textContent, store: proxyStore, xpath});
   const injectnode = new InjectNode(textdropdown, xPathNode);
 }
 
 const accumlateReview = (asin, start, count, xpathSet={}) => {
   matchReview({asin, start, count}, (res)=> {
+    if (res.payload && Array.isArray(res.payload)){
 
-    forEach(res, (val, xpath)=>{
-      if (Array.isArray(val) && val.length != 0){
+      forEach(res.payload, obj=>{
+        if (obj.reviews && obj.reviews.length != 0){
+          const xpath = obj.xpath;
+          const options = obj.reviews;
+          proxyStore.dispatch({
+            type: "ADD_CONTENT",
+            payload: { xpath, options}
+          });
 
-        const options = [];
-        for (var i=0; i < val.length; i++){
-          forEach(val[i], (v, k)=>{
-            options.push({text: k, key: v[1], value: v[0], score:v[2], feedbackID: v[3]});
-          })
+          if (!xpathSet[xpath]){
+            replaceContextAtXpath(xpath);
+            xpathSet[xpath] = true;
+          }
         }
 
-        proxyStore.dispatch({
-          type: "ADD_CONTENT",
-          payload: { xpath, options}
-        });
-        if (!xpathSet[xpath]){
-          replaceContextAtXpath(xpath);
-          xpathSet[xpath] = true;
-        }
-      }
-    })
+
+      })
+    }
+
+    // forEach(res, (val, xpath)=>{
+    //   if (val) && val.length != 0){
+    //
+    //     for (var i=0; i < val.length; i++){
+    //       forEach(val[i], (v, k)=>{
+    //         options.push({text: k, key: v[1], value: v[0], score:v[2], feedbackID: v[3]});
+    //       })
+    //     }
+    //
+
+
+    //   }
+    // })
     if (res.has_more) {
       accumlateReview(asin, start+count, 10, xpathSet);
     }else{

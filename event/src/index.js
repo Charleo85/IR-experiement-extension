@@ -16,3 +16,7 @@ wrapStore(store, {
 });
 
 setupMenu();
+
+var canvas = document.createElement('canvas');
+canvas.width = 300;
+canvas.height = 400;

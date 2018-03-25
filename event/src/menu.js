@@ -43,7 +43,7 @@ export const setupMenu = () => {
 
   var radio1 = chrome.contextMenus.create({"title": "Go to review page", "type": "radio",
                                            "onclick":radioOnClick});
-  console.log("radio1:" + radio1 + " radio2:" + radio2);
+  console.log("radio1:" + radio1);
 
 
 

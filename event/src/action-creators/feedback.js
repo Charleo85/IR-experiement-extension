@@ -3,9 +3,7 @@ import {url} from '../constant.js';
 
 export const clickAction = (id, callback) => request
   .get(url+'/api/click')
-  .query({"id":id})
-  .set("Content-type","application/x-www-form-urlencoded")
-  .redirects(0)
+  .query({"id": id})
   .end(function(err, res){
     if (err || !res.ok) {
       console.log('Oh no! error');
@@ -18,9 +16,7 @@ export const clickAction = (id, callback) => request
 
 export const ratingAction = (id, rating, callback) => request
   .get(url+'/api/rate')
-  .query({"id":id, 'rating': rating})
-  .set("Content-type","application/x-www-form-urlencoded")
-  .redirects(0)
+  .query({"id":id, "rating":rating})
   .end(function(err, res){
     if (err || !res.ok) {
       console.log('Oh no! error');

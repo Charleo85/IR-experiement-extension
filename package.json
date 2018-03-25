@@ -1,6 +1,6 @@
 {
   "name": "IR-extension",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "private": true,
   "description": "",
   "scripts": {
@@ -16,6 +16,7 @@
     "babel-polyfill": "^6.26.0",
     "http": "0.0.0",
     "lodash": "^4.17.4",
+    "npm": "^5.8.0",
     "random-ua": "0.0.6",
     "react": "^15.6.2",
     "react-chrome-redux": "1.4.0",

@@ -2,25 +2,31 @@ import React, { Component, PureComponent } from "react";
 
 import { connect } from "react-redux";
 import { get } from "lodash";
-import { Dropdown, Table, Icon, Rating, Label } from "semantic-ui-react";
+import { Button, Dropdown, Table, Icon, Rating, Label } from "semantic-ui-react";
 import { displaySentiment, selectIcon, displayRating } from "../utils";
 import { ratingAction, clickAction } from "../../../../event/src/action-creators/feedback"
 
-const openReviewLink = (id, text, score, dispatch, feedbackID) => () => {
+const openReviewLink = (id, text, sentiment, dispatch, feedbackID) => () => {
   dispatch({
     type: "REVIEW_INFO",
-    payload: { id, text, score }
+    payload: { id, text, sentiment }
   });
-  clickAction(feedbackID)
+  // console.log(feedbackID)
+  clickAction(feedbackID);
+  // const viewTabUrl = chrome.runtime.getBackgroundPage(window=>{
+  //   console.log(window)
+  // });
+  // const viewTabUrl = chrome.extension.getURL('background.html')
+  // window.open(viewTabUrl);
   window.open("https://www.amazon.com/gp/customer-reviews/" + id);
 };
 
-const sentimentLabel = score => {
-  const { color, content } = selectIcon(score);
+const sentimentLabel = sentiment => {
+  const { color, content } = selectIcon(sentiment);
   return (
     <Label ribbon color={color}>
       {content}
-      <Label.Detail>{displaySentiment(score)}</Label.Detail>
+      <Label.Detail>{displaySentiment(sentiment)}</Label.Detail>
     </Label>
   );
 };
@@ -35,7 +41,7 @@ class TextDropdownItem extends Component {
     // console.log(this.props.option.feedbackID, rating);
     this.setState({ rating });
     if (rating != 0){ // do not feedback on no opinion
-      ratingAction(this.props.option.feedbackID, rating);
+      ratingAction(this.props.option.ranking, rating);
     }
   }
 
@@ -43,7 +49,7 @@ class TextDropdownItem extends Component {
     const { option, dispatch } = this.props;
     return (
       <Table.Row>
-        <Table.Cell width="2">{sentimentLabel(option.score)}</Table.Cell>
+        <Table.Cell width="2">{sentimentLabel(option.sentiment)}</Table.Cell>
         <Table.Cell width="3">
           <Rating
             icon="star"
@@ -56,9 +62,9 @@ class TextDropdownItem extends Component {
         </Table.Cell>
         <Table.Cell
           style={{ cursor: "pointer" }}
-          onClick={openReviewLink(option.key, option.text, option.score, dispatch, option.feedbackID)}
+          onClick={openReviewLink(option.id, option.content, option.sentiment, dispatch, option.ranking)}
         >
-          {option.text}
+          {option.content}
         </Table.Cell>
       </Table.Row>
     );
@@ -88,11 +94,21 @@ export class TextDropdown extends PureComponent {
   constructor(props) {
     super();
   }
+
+  sort(){
+    const {xpath} = this.props;
+    this.props.dispatch({
+      type: "SORT_REVIEW",
+      payload: {xpath}
+    });
+    console.log("sorted")
+
+  }
   // auto scrolling
   render() {
     // console.log(this.props)
     return (
-      <Dropdown text={this.props.text} style={{ width: "450%", zIndex: "999" }}>
+      <Dropdown text={this.props.text} style={{ width: "450%", zIndex: "999",  }}>
         <Dropdown.Menu scrolling>
           <Table celled padded onClick={e => e.stopPropagation()}>
             <Table.Header>
@@ -105,16 +121,17 @@ export class TextDropdown extends PureComponent {
                 </Table.HeaderCell>
                 <Table.HeaderCell>
                   Reviews (click for entire review)
+                  <Button primary onClick={this.sort.bind(this)} style={{float: 'right'}}>Rank Reviews</Button>
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 
             <Table.Body>
-              {this.props.options.map(option => (
+              {this.props.options.map((option, idx) => (
                 <TextDropdownItem
                   option={option}
                   dispatch={this.props.dispatch}
-                  key={option.key}
+                  key={option.id}
                 />
               ))}
             </Table.Body>

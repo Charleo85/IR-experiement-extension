@@ -12,7 +12,7 @@ export default (prevstate = initialState, action) => {
       const reviews = Object.assign({}, prevstate.reviews, {
         reviewID : {
           text: get(action, "payload.text", ""),
-          score: get(action, "payload.score", "")
+          sentiment: get(action, "payload.sentiment", "")
         }
       });
       return Object.assign({}, prevstate, {reviews});

@@ -50,6 +50,10 @@ gulp.task("copy-manifest", ["clean"], () => {
   return gulp.src("manifest.json").pipe(gulp.dest("./build"));
 });
 
+gulp.task("copy-background", ["clean"], () => {
+  return gulp.src("background.html").pipe(gulp.dest("./build"));
+});
+
 gulp.task("copy-icons", ["clean"], () => {
   return gulp.src("icons/**/*").pipe(gulp.dest("./build/icons/"));
 });
@@ -60,6 +64,7 @@ gulp.task("clean", cb => {
 
 gulp.task("build", [
   "copy-manifest",
+  "copy-background",
   "copy-icons",
   "popup-html",
   "popup-js",
