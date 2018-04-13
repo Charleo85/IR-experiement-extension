@@ -20,7 +20,7 @@ Click review sentence to visit the entire review in details:
 
 
 #### TO DO
-- [ ] speedup review parsing and processing
+- [x] speedup review parsing and processing
 - [ ] setup user profile and feedback mechanism
 - [ ] support more product categories
 - [ ] .......
