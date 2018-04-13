@@ -16,9 +16,9 @@ export default (prevstate = initialState, action) => {
       console.log(xapthContent);
       xapthContent.sort((a,b)=>{
         if (a.rating == b.rating){
-          return (a.clicked > b.clicked);
+          return (a.clicked < b.clicked);
         }else{
-          return a.rating > b.rating;
+          return a.rating < b.rating;
         }
       })
       const contents = Object.assign({}, prevstate.content, {

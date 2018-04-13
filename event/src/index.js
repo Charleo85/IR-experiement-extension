@@ -15,7 +15,7 @@ wrapStore(store, {
   portName: "example"
 });
 
-setupMenu();
+setupMenu(store.dispatch);
 
 var canvas = document.createElement('canvas');
 canvas.width = 300;

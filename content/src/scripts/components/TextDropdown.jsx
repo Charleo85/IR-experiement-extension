@@ -51,6 +51,7 @@ class TextDropdownItem extends Component {
       <Table.Row>
         <Table.Cell width="2">{sentimentLabel(option.sentiment)}</Table.Cell>
         <Table.Cell width="3">
+          {`${option.clicked}.${option.rating}`}
           <Rating
             icon="star"
             clearable
