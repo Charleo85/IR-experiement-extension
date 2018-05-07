@@ -18,7 +18,7 @@ const proxyStore = new Store({
 export const matchReview = (query, callback, retry=3) => {
   proxyStore.ready().then(() => {
     const server = get(servers, get(proxyStore.getState(), 'settings.model', null), '');
-    console.log(server)
+    // console.log(server)
     request.post(url+'/api/amazon')
     .send({
       "url": server
