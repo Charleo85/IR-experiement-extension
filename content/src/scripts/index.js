@@ -14,7 +14,6 @@ import '../../../semantic/dist/extension.css';
 import {matchReview, matchHighlight} from '../../../event/src/action-creators/match-review';
 import {parseURL, selectHighlightColor} from './utils';
 import {forEach, get} from 'lodash';
-import 'mark.js/dist/mark.es6.js';
 
 const proxyStore = new Store({
   portName: "example"
@@ -42,12 +41,15 @@ render(
 //   console.log(message);
 // }
 
+const Mark = require('mark.js');
+
 const highlightReview = () => {
   // wait for the store to connect to the background page
   proxyStore.ready().then(() => {
     // The store implements the same interface as Redux's store
     // so you can use tools like `react-redux` no problem!
     const reviews = get(proxyStore.getState(), 'impression.reviews.reviewID', null);
+    // console.log(reviews)
     if (reviews && reviews.text && reviews.sentiment != null){
         const xPathNode = getXPathNode("//span[contains(@class, 'review-text')]");
         const instance = new Mark(xPathNode);

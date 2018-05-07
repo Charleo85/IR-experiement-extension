@@ -71,43 +71,22 @@ class TextDropdownItem extends Component {
     );
   }
 }
-//pagination {{displayRating()}}
-// <Table.Footer>
-//   <Table.Row>
-//     <Table.HeaderCell colSpan='3'>
-//       <Menu floated='right' pagination>
-//         <Menu.Item as='a' icon>
-//           <Icon name='left chevron' />
-//         </Menu.Item>
-//         <Menu.Item as='a'>1</Menu.Item>
-//         <Menu.Item as='a'>2</Menu.Item>
-//         <Menu.Item as='a'>3</Menu.Item>
-//         <Menu.Item as='a'>4</Menu.Item>
-//         <Menu.Item as='a' icon>
-//           <Icon name='right chevron' />
-//         </Menu.Item>
-//       </Menu>
-//     </Table.HeaderCell>
-//   </Table.Row>
-// </Table.Footer>
 
 export class TextDropdown extends PureComponent {
   constructor(props) {
     super();
   }
 
-  sort(){
+  rank(){
     const {xpath} = this.props;
     this.props.dispatch({
       type: "SORT_REVIEW",
       payload: {xpath}
     });
-    console.log("sorted")
-
   }
+
   // auto scrolling
   render() {
-    // console.log(this.props)
     return (
       <Dropdown text={this.props.text} style={{ width: "450%", zIndex: "999",  }}>
         <Dropdown.Menu scrolling>
@@ -122,7 +101,7 @@ export class TextDropdown extends PureComponent {
                 </Table.HeaderCell>
                 <Table.HeaderCell>
                   Reviews (click for entire review)
-                  <Button primary onClick={this.sort.bind(this)} style={{float: 'right'}}>Rank Reviews</Button>
+                  <Button primary onClick={this.rank.bind(this)} style={{float: 'right'}}>Rank</Button>
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>

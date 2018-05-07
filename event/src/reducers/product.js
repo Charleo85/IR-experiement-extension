@@ -13,7 +13,7 @@ export default (prevstate = initialState, action) => {
     case "SORT_REVIEW":
       const path0 = get(action, "payload").xpath;
       const xapthContent = get(prevstate, ["content", path0], []);
-      console.log(xapthContent);
+      // console.log(xapthContent);
       xapthContent.sort((a,b)=>{
         if (a.rating == b.rating){
           return (a.clicked < b.clicked);
@@ -25,6 +25,8 @@ export default (prevstate = initialState, action) => {
         [xpath]: xapthContent
       })
       return Object.assign({}, prevstate, {content: contents});
+    case "CLUSTER_REVIEW":
+      return prevstate;
     case "PRODUCT_INFO":
       const {productID, title, properties, detail} = get(action, "payload");
       return Object.assign({}, prevstate, {

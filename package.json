@@ -11,7 +11,7 @@
     "release": "release-it",
     "prettier": "prettier --single-quote --trailing-comma es5 --bracket-spacing false --parser flow --tab-width 2 --print-width 100 --write \"{popup,event,content}/**/*.js\""
   },
-  "author": "Charlie Wu & Jerry Sun",
+  "author": "Charlie Wu",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "http": "0.0.0",

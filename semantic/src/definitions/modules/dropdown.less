@@ -67,7 +67,7 @@
 }
 
 .ui.dropdown .menu > * {
-  white-space: normal;
+  white-space: nowrap;
 }
 
 
@@ -122,7 +122,7 @@
   text-align: @itemTextAlign;
 
   border-top: @itemDivider;
-  line-height: 1.3em;
+  line-height: @itemLineHeight;
   font-size: @itemFontSize;
   color: @itemColor;
 
@@ -181,7 +181,7 @@
   margin: @menuDividerMargin;
 }
 
-.ui.dropdown .menu > .input {
+.ui.dropdown.dropdown .menu > .input {
   width: auto;
   display: flex;
   margin: @menuInputMargin;
