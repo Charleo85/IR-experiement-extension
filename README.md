@@ -1,6 +1,7 @@
 # IR-experiment-extension
+Install directly from [Google Chrome Store](https://chrome.google.com/webstore/detail/amazon-shopping-assistant/mgpkmgfoiepmilkmjbliijpafdibbdda)
 
-To install and give it a try, simply go to chrome://extensions and load the latest Chrome Extension [release](https://github.com/Charleo85/IR-experiement-extension/releases) from your directory.
+Or to install the Dev version, simply go to chrome://extensions and load the latest Chrome Extension [release](https://github.com/Charleo85/IR-experiement-extension/releases) from your directory.
 
 The extension 🤖 is designed to digest thousands of amazon.com reviews for shoppers:
 
